@@ -6,3 +6,4 @@ azure-identity==1.19.0
 scholarly==1.7.11
 beautifulsoup4==4.13.3
 slowapi==0.1.9
+gunicorn==23.0.0
