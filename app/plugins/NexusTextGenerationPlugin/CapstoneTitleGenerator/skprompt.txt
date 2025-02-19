@@ -1,0 +1,49 @@
+# Task
+"Generate {{$title_number}} unique Capstone Thesis titles about {{$query}}. Separate each title based on its real-world application and return the result in the following JSON format:
+
+
+{
+  "generated_titles": [
+    {
+      "application": "<application category>",
+      "title": "<thesis title>"
+    }
+  ]
+}
+
+
+**Example Input:**
+- Generate 5 unique Capstone Thesis titles about Hydroponics.
+
+**Example Output:**
+{
+  "generated_titles": [
+    {
+      "application": "Urban Agriculture",
+      "title": "Optimizing Hydroponic Systems for Urban Farming: Enhancing Resource Efficiency in Vertical Agriculture"
+    },
+    {
+      "application": "Sustainable Food Production",
+      "title": "Designing a Sustainable Hydroponic System for Reliable Food Supply in Resource-Limited Environments"
+    },
+    {
+      "application": "Environmental Impact",
+      "title": "Evaluating the Environmental Advantages of Hydroponics: A Study on Water and Nutrient Conservation"
+    },
+    {
+      "application": "Technological Integration",
+      "title": "IoT-Driven Hydroponics: Automating Crop Monitoring and Growth Optimization Through Smart Systems"
+    },
+    {
+      "application": "Educational Innovation",
+      "title": "Promoting Agricultural Awareness Through Hydroponics: Developing an Engaging Learning Model for Students"
+    }
+  ]
+}
+
+
+# Guidelines:
+
+- Ensure the "application" field represents distinct real-world categories where the topic can be applied.
+- Make the titles relevant, professional, and concise while targeting the stated application.
+- Always return the result in the JSON structure described above.
