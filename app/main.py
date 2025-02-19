@@ -61,7 +61,3 @@ async def global_exception_handler(request:Request, exc: Exception):
 app.include_router(gscholar_router)
 app.include_router(titles_router)
 app.include_router(capstone_title_generator_router)
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
