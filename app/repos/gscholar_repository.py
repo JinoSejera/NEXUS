@@ -11,9 +11,8 @@ class GoogleScholarRepository:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
         }
-        
-        try:
-            async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession() as session:
+            try:
                 async with session.get(uri, headers=headers) as response:
                     response.raise_for_status()
                     
@@ -30,6 +29,8 @@ class GoogleScholarRepository:
                         })
                     
                     return result[:rrl_number]
-        except Exception as e:
-            raise HTTPException(status_code=500,
-                                detail=f"Error fetching data from Google Scholar: {str(e)}")
+            except Exception as e:
+                raise HTTPException(status_code=500,
+                                    detail=f"Error fetching data from Google Scholar: {str(e)}")
+            finally:
+                await session.close()
