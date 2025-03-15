@@ -1,13 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from fastapi.middleware.cors import CORSMiddleware
-from .api.v1.endpoints.gscholar import router as gscholar_router
-from .api.v1.endpoints.capstone_title import router as titles_router
 from .api.v1.endpoints.capstone_title_generator_rrls import router as capstone_title_generator_router
-
+from .services.get_client_ip import get_client_ip
 import logging
 import time
 from dotenv import load_dotenv
@@ -19,7 +16,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Rate Limiting
-app.state.limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = Limiter(key_func=get_client_ip)
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS
@@ -31,10 +28,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.middleware("http")
+@app.middleware("http")
 async def log_request(request:Request, call_next):
+    client_ip = get_client_ip(request)
     start_time = time.time()
-    logging.info(f"Incoming request: {request.method} {request.url}")
+    logger.info(f"Incoming request: {request.method} {request.url}\nFrom IP: {client_ip}")
     
     try:
         response = await call_next(request)
@@ -58,6 +56,4 @@ async def global_exception_handler(request:Request, exc: Exception):
         content={"message": "Internal servcer error", "detail": str(exc)}
     )
 
-app.include_router(gscholar_router)
-app.include_router(titles_router)
 app.include_router(capstone_title_generator_router)

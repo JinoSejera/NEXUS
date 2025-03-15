@@ -8,10 +8,12 @@ from ....services.gscholar_service import GoogleScholarService
 from ....models.capstone_title_rrl_model import CapstoneTitlesWithRRL, GeneratedTitlesResponse
 from ....dependencies import get_capstone_title_service, get_gscholar_service
 
+import logging
 from typing import List
 
 router = APIRouter(prefix="/api/v1")
 limiter = Limiter(key_func=get_remote_address)
+logger = logging.getLogger(__name__)
 
 @router.post('/generate_capstone_titles', response_model=GeneratedTitlesResponse)
 @limiter.limit("3/hour")
@@ -21,7 +23,6 @@ async def generate_capstone_titles(
     title_service: CapstoneTitleService = Depends(get_capstone_title_service),
     google_scholar_service: GoogleScholarService = Depends(get_gscholar_service)  
 ):
-    
     try:
         titles = await title_service.generate_capstone_titles(query)
 
@@ -34,4 +35,5 @@ async def generate_capstone_titles(
         
         return GeneratedTitlesResponse(generated_titles=titles_with_rrl)
     except Exception as e:
+        logger.error(f"Failed to generate Capstone Titles due to error encountered: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to generate Capstone Titles due to error encountered: {e}")

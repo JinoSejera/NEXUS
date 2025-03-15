@@ -3,8 +3,6 @@ from semantic_kernel.functions import KernelArguments
 from semantic_kernel import Kernel
 
 from openai import AsyncAzureOpenAI
-import os
-import sys
 import json
 from pathlib import Path
 from openai import AsyncAzureOpenAI
