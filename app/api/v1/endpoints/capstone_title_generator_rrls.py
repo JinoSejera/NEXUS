@@ -11,11 +11,13 @@ from ....dependencies import get_capstone_title_service, get_gscholar_service
 import logging
 from typing import List
 
-router = APIRouter(prefix="/api/v1")
+api = 'Nexus'
+
+router = APIRouter(prefix="/api/v1/generate_title")
 limiter = Limiter(key_func=get_remote_address)
 logger = logging.getLogger(__name__)
 
-@router.post('/generate_capstone_titles', response_model=GeneratedTitlesResponse)
+@router.post('/generate', response_model=GeneratedTitlesResponse, tags=[api])
 @limiter.limit("3/hour")
 async def generate_capstone_titles(
     request: Request,
