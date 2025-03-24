@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,6 +20,9 @@ app = FastAPI()
 # Rate Limiting
 app.state.limiter = Limiter(key_func=get_client_ip)
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Mount the static directory
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # CORS
 app.add_middleware(
@@ -47,6 +52,9 @@ async def log_request(request:Request, call_next):
     logger.info(f"Request completed in {process_time:.2f}s with status {response.status_code}")
     return response
 
+@app.get("/favicon.png", include_in_schema=False)
+async def favicon():
+    return RedirectResponse(url="/static/favicon.png")
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request:Request, exc: Exception):
