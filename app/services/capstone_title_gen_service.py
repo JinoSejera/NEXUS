@@ -9,12 +9,12 @@ logger = logging.getLogger(__name__)
 
 class CapstoneTitleService:
     def __init__(self, repository: CapstoneTitleGeneratorRepository):
-        self._repository = repository
+        self.__repository = repository
         
     
     async def generate_capstone_titles(self, query:str) -> GeneratedTitles:
         try:
-            results = await self._repository.generate_titles(query)
+            results = await self.__repository.generate_titles(query)
             
             titles:List[GeneratedTitle] = [GeneratedTitle(application=result['application'], title=result['title']) for result in results['generated_titles']]
             
