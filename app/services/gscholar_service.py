@@ -18,3 +18,5 @@ class GoogleScholarService:
         except Exception as e:
             logger.error(f"Failed to search for RRLs for title: '{query}', due to error encountered: {e}")
             raise e
+        
+    

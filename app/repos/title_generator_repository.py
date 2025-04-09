@@ -23,10 +23,10 @@ class CapstoneTitleGeneratorRepository:
 
         self.__title_gen = self.__kernel.add_plugin(parent_directory=plugin_dir, plugin_name="NexusTextGenerationPlugin")
         
-    async def generate_titles(self, query:str):
+    async def generate_titles(self, query:str, course:str) -> dict:
         result = await self.__kernel.invoke(
             self.__title_gen['CapstoneTitleGenerator'],
-            KernelArguments(query=query)
+            KernelArguments(query=query,course=course)
         )
         
         return json.loads(str(result))

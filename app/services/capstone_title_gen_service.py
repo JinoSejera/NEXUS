@@ -12,11 +12,11 @@ class CapstoneTitleService:
         self.__repository = repository
         
     
-    async def generate_capstone_titles(self, query:str) -> GeneratedTitles:
+    async def generate_capstone_titles(self, query:str, course:str) -> GeneratedTitles:
         try:
-            results = await self.__repository.generate_titles(query)
+            results = await self.__repository.generate_titles(query, course)
             
-            titles:List[GeneratedTitle] = [GeneratedTitle(application=result['application'], title=result['title']) for result in results['generated_titles']]
+            titles:List[GeneratedTitle] = [GeneratedTitle(application=result['application'], title=result['title'], overview=result['overview']) for result in results['generated_titles']]
             
             return GeneratedTitles(results=titles)
         except Exception as e:
