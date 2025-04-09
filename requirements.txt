@@ -1,0 +1,9 @@
+fastapi==0.115.8
+uvicorn==0.34.0
+semantic_kernel==1.20.0
+openai==1.61.1
+azure-identity==1.19.0
+scholarly==1.7.11
+beautifulsoup4==4.13.3
+slowapi==0.1.9
+gunicorn==23.0.0
