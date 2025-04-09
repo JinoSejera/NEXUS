@@ -9,26 +9,24 @@ from openai import AsyncAzureOpenAI
 
 current_path = Path(__file__).resolve().parent
 chat_id = "nexus"
+plugin_dir = current_path / "../plugins/"
+
 
 class CapstoneTitleGeneratorRepository:
     def __init__(self, async_azure_openai_client: AsyncAzureOpenAI):
         
-        self._kernel = Kernel()
-        self._kernel.add_service(AzureChatCompletion(
+        self.__kernel = Kernel()
+        self.__kernel.add_service(AzureChatCompletion(
             service_id=chat_id,
             async_client=async_azure_openai_client
         ))
 
-        plugin_dir = current_path / "../plugins/"
+        self.__title_gen = self.__kernel.add_plugin(parent_directory=plugin_dir, plugin_name="NexusTextGenerationPlugin")
         
-        print(plugin_dir)
-
-        self._title_gen = self._kernel.add_plugin(parent_directory=plugin_dir, plugin_name="NexusTextGenerationPlugin")
-        
-    async def generate_titles(self, query:str):
-        result = await self._kernel.invoke(
-            self._title_gen['CapstoneTitleGenerator'],
-            KernelArguments(query=query)
+    async def generate_titles(self, query:str, course:str) -> dict:
+        result = await self.__kernel.invoke(
+            self.__title_gen['CapstoneTitleGenerator'],
+            KernelArguments(query=query,course=course)
         )
         
         return json.loads(str(result))
