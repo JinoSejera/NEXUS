@@ -71,7 +71,7 @@ async def global_exception_handler(request:Request, exc: Exception):
     logger.error(f"Unhandled exception: {str(exc)}")
     return JSONResponse(
         status_code=500,
-        content={"message": "Internal servcer error", "detail": str(exc)}
+        content={"message": "Internal server error", "detail": str(exc)}
     )
 
 app.include_router(capstone_title_generator_router)
