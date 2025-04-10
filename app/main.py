@@ -30,7 +30,7 @@ app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Rate Limiting
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+# app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Mount the static directory
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
