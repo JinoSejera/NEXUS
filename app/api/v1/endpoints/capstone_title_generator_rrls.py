@@ -10,21 +10,20 @@ from ....dependencies import get_capstone_title_service, get_gscholar_service
 from ....models.request_body_model import RequestBody 
 import logging
 from typing import List
+from ....utils.rate_limit_decorator import rate_limited
 
-api = 'Nexus'
-
+api = 'Capstone Title Generator with RRLs'
 router = APIRouter(prefix="/api/v1/generate_title")
-limiter = Limiter(key_func=get_remote_address)
 logger = logging.getLogger(__name__)
 
 @router.post('/generate', response_model=GeneratedTitlesResponse, tags=[api])
-@limiter.limit("3/hour")
+@rate_limited("3/hour")
 async def generate_capstone_titles(
     request: Request,
     request_body: RequestBody,
     title_service: CapstoneTitleService = Depends(get_capstone_title_service),
     google_scholar_service: GoogleScholarService = Depends(get_gscholar_service)  
-):
+): 
     try:
         
         titles = await title_service.generate_capstone_titles(request_body.query, request_body.course)
