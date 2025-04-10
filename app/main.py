@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+# app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Rate Limiting
 app.state.limiter = limiter
