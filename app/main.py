@@ -10,6 +10,7 @@ from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from .api.v1.endpoints.capstone_title_generator_rrls import router as capstone_title_generator_router
 from .services.get_client_ip import get_client_ip
+from .utils.limiter import limiter
 import logging
 import time
 from dotenv import load_dotenv
@@ -28,7 +29,7 @@ app = FastAPI()
 app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Rate Limiting
-app.state.limiter = Limiter(key_func=get_client_ip)
+app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Mount the static directory
