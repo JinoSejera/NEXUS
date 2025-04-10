@@ -5,6 +5,9 @@ from fastapi.staticfiles import StaticFiles
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from fastapi.middleware.cors import CORSMiddleware
+
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
+
 from .api.v1.endpoints.capstone_title_generator_rrls import router as capstone_title_generator_router
 from .services.get_client_ip import get_client_ip
 import logging
@@ -21,6 +24,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 # Rate Limiting
 app.state.limiter = Limiter(key_func=get_client_ip)
