@@ -1,7 +1,7 @@
 from fastapi import Request
 import logging
 
-logger = logging(__name__)
+logger = logging.getLogger(__name__)
 
 def get_client_ip(request: Request):
     """Extract client IP from X-Client-IP (if sent), X-Forwarded-For or fallback to client.host."""
