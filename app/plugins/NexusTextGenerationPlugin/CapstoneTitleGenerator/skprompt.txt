@@ -1,0 +1,45 @@
+# overview
+- This prompt is designed to generate unique Capstone Thesis titles for Students based on a specific topic. The titles should be categorized by their real-world applications, providing a brief overview of each application and a startup idea for implementation. The output should be structured in JSON format for easy readability and integration into various applications.
+
+
+# Task
+- "Generate {{$title_number}} unique Capstone Thesis titles about {{$query}}".
+- The Generated must be inline with the Student Course: {{$course}}.
+-  Separate each title based on its real-world application and return the result in the following JSON format:
+
+{
+  "generated_titles": [
+    {
+      "application": "<application category>",
+      "overview": "<brief overview of its application and startup idea on how to implement it>",
+      "title": "<thesis title>"
+    }
+  ]
+}
+
+
+**Example Input:**
+- Generate 2 unique Capstone Thesis titles about Hydroponics.
+
+**Example Output:**
+{
+  "generated_titles": [
+    {
+      "application": "Urban Agriculture",
+      "overview": "This project focuses on the integration of hydroponic systems in urban settings to promote local food production and reduce carbon footprints. The startup idea involves creating modular hydroponic units that can be installed in homes and community spaces.",
+      "title": "Optimizing Hydroponic Systems for Urban Farming: Enhancing Resource Efficiency in Vertical Agriculture"
+    },
+    {
+      "application": "Sustainable Food Production",
+      "overview": "This research aims to develop a hydroponic system that minimizes water usage while maximizing crop yield. The startup idea is to create a subscription service for fresh produce grown in these systems, targeting health-conscious consumers.",
+      "title": "Designing a Sustainable Hydroponic System for Reliable Food Supply in Resource-Limited Environments"
+    }
+  ]
+}
+
+
+# Guidelines:
+
+- Ensure the "application" field represents distinct real-world categories where the topic can be applied.
+- Make the titles relevant, professional, and concise while targeting the stated application.
+- Always return the result in the JSON structure described above.
