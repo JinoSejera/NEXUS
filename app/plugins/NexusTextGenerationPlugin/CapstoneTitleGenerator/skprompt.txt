@@ -3,7 +3,7 @@
 
 
 # Task
-- "Generate {{$title_number}} unique Capstone Thesis titles about {{$query}}.
+- "Generate {{$title_number}} unique Capstone Thesis titles about {{$query}}".
 - The Generated must be inline with the Student Course: {{$course}}.
 -  Separate each title based on its real-world application and return the result in the following JSON format:
 
@@ -19,7 +19,7 @@
 
 
 **Example Input:**
-- Generate 5 unique Capstone Thesis titles about Hydroponics.
+- Generate 2 unique Capstone Thesis titles about Hydroponics.
 
 **Example Output:**
 {
@@ -33,21 +33,6 @@
       "application": "Sustainable Food Production",
       "overview": "This research aims to develop a hydroponic system that minimizes water usage while maximizing crop yield. The startup idea is to create a subscription service for fresh produce grown in these systems, targeting health-conscious consumers.",
       "title": "Designing a Sustainable Hydroponic System for Reliable Food Supply in Resource-Limited Environments"
-    },
-    {
-      "application": "Environmental Impact",
-      "overview": "This study evaluates the environmental benefits of hydroponics compared to traditional farming methods, focusing on water conservation and reduced pesticide use. The startup idea is to create an educational platform that promotes hydroponic farming as a sustainable alternative.",
-      "title": "Evaluating the Environmental Advantages of Hydroponics: A Study on Water and Nutrient Conservation"
-    },
-    {
-      "application": "Technological Integration",
-      "overview": "This project explores the use of IoT and AI in hydroponic systems to automate monitoring and optimize growth conditions. The startup idea involves developing a smart hydroponic kit that can be controlled via a mobile app, making it accessible for home users.",
-      "title": "IoT-Driven Hydroponics: Automating Crop Monitoring and Growth Optimization Through Smart Systems"
-    },
-    {
-      "application": "Educational Innovation",
-      "overview": "This research focuses on creating an engaging learning model for students using hydroponics as a teaching tool. The startup idea is to develop a curriculum and hands-on kits for schools to teach students about sustainable agriculture and biology.",
-      "title": "Promoting Agricultural Awareness Through Hydroponics: Developing an Engaging Learning Model for Students"
     }
   ]
 }
