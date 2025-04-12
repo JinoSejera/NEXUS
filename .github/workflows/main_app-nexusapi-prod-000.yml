@@ -28,18 +28,10 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-
-      - name: Cache Python dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-
+        
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -86,9 +78,4 @@ jobs:
         with:
           app-name: 'app-nexusapi-prod-000'
           slot-name: 'Production'
-
-      - name: Set deployment URL output
-        run: echo "webapp-url=https://${{ secrets.AZURE_WEBAPP_NAME }}.azurewebsites.net" >> $GITHUB_ENV
-
-      - name: Clean up artifacts
-        run: rm -rf release.zip
+          
