@@ -1,23 +1,20 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Query
+import logging
+from typing import List
 
-from slowapi import Limiter
-from slowapi.util import get_remote_address
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 from ....services.capstone_title_gen_service import CapstoneTitleService
 from ....services.gscholar_service import GoogleScholarService
 from ....models.capstone_title_rrl_model import CapstoneTitlesWithRRL, GeneratedTitlesResponse
 from ....dependencies import get_capstone_title_service, get_gscholar_service
 from ....models.request_body_model import RequestBody 
-import logging
-from typing import List
-from ....utils.rate_limit_decorator import rate_limited
 from ....utils.limiter import limiter
+
 api = 'Capstone Title Generator with RRLs'
 router = APIRouter(prefix="/api/v1/generate_title")
 logger = logging.getLogger(__name__)
 
 @router.post('/generate', response_model=GeneratedTitlesResponse, tags=[api])
-# @rate_limited("3/hour")
 @limiter.limit("3/hour")
 async def generate_capstone_titles(
     request: Request,
