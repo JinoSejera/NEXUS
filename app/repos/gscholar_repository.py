@@ -1,9 +1,15 @@
+
 import aiohttp
 from bs4 import BeautifulSoup
 from fastapi import HTTPException
 from typing import List, Dict
 
-class GoogleScholarRepository:
+from ..contract.gscholar_base import GScholarBase
+import logging
+
+logger = logging.getLogger(__name__)
+
+class GoogleScholarRepository(GScholarBase):
     @staticmethod
     async def search_rrl(query: str, rrl_number: int) -> List[Dict[str, str]]:
         uri = f"https://scholar.google.com/scholar?q={query}"
@@ -22,16 +28,15 @@ class GoogleScholarRepository:
                     result = []
                     for item in soup.find_all('div', class_='gs_ri'):
                         title_tag = item.find('h3', class_='gs_rt')
-                        link_tag = item.find('a')
-                        
-                        if title_tag and link_tag:
+                        if title_tag:
+                            link_tag = title_tag.find('a')
                             title = title_tag.text
-                            link = link_tag['href']
+                            link = link_tag['href'] if link_tag else None
                             result.append({
                                 "title": title,
                                 "link": link
                             })
-                    
+                    logger.info(f"Successfully fetched {len(result)} results for query: '{query}'\nResults: {result}")
                     return result[:rrl_number]
             except aiohttp.ClientError as e:
                 raise HTTPException(status_code=500,
